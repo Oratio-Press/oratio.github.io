@@ -1,0 +1,14 @@
+{%- comment -%}
+  The closing invitation at the end of most pages: by default, to join the
+  launch list. A page may pass its own title, text, and button:
+    {% include launch-list.html title="…" text="…" button="…" url="…" %}
+{%- endcomment -%}
+<section class="section">
+  <div class="card card--accent cta">
+    <h2>{{ include.title | default: "Begin with Scripture and prayer." }}</h2>
+    <p>{{ include.text | default: "Join the launch list for product updates, opportunities to take part in testing, and the announcement when Oratio is ready." }}</p>
+    <div class="buttons">
+      <a class="button button--primary" href="{{ include.url | default: site.launch_list }}">{{ include.button | default: "Join the launch list" }}</a>
+    </div>
+  </div>
+</section>

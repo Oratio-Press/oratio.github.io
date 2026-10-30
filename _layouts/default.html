@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{%- comment -%}
+  The one layout every page uses. A page sets in its front matter:
+    title        the browser tab's title (" | Oratio" is added), and the hero's
+                 title unless hero.title is given;
+    description  the search and link-preview summary (defaults to the site's);
+    hero         kicker, title, lead, note, and buttons (a list of
+                 {label, url, style}) for the burgundy card at the top; with
+                 logo: true it also shows the client's logo, as Home does.
+  The page's own content follows the hero.
+{%- endcomment -%}
+{%- assign hero = page.hero -%}
+{%- assign description = page.description | default: site.description | strip_newlines -%}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.url == "/" %}Oratio | {{ site.tagline }}{% else %}{{ page.title }} | Oratio{% endif %}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="theme-color" content="#620E1B" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#26374B" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Oratio">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:image" content="{{ site.url }}/assets/img/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/oratio_logo.svg">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/CrimsonPro-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="/" aria-label="Oratio, home">
+        <img class="brand__mark" src="/assets/img/oratio_mark.svg" alt="" width="34" height="32">
+        <img class="brand__word" src="/assets/img/oratio_wordmark_light.svg" alt="Oratio" width="105" height="28">
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        {%- for item in site.nav %}
+        {%- assign current = false %}
+        {%- if page.url == item.url or page.url == "/index.html" and item.url == "/" %}{% assign current = true %}{% endif %}
+        <a href="{{ item.url }}"{% if current %} aria-current="page"{% endif %}>{{ item.title }}</a>
+        {%- endfor %}
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    {%- if hero %}
+    <section class="hero">
+      <div class="hero__card{% if hero.logo %} hero__card--logo{% endif %}">
+        <div class="hero__text">
+          <p class="kicker">{{ hero.kicker | default: "Oratio Prayer App" }}</p>
+          <h1>{{ hero.title | default: page.title }}</h1>
+          {%- if hero.lead %}
+          <p class="hero__lead">{{ hero.lead }}</p>
+          {%- endif %}
+          {%- if hero.note %}
+          <p class="hero__note">{{ hero.note }}</p>
+          {%- endif %}
+          {%- if hero.buttons %}
+          <div class="buttons">
+            {%- for button in hero.buttons %}
+            {%- assign url = button.url | replace: "LAUNCH_LIST", site.launch_list %}
+            <a class="button button--{{ button.style | default: 'primary' }}" href="{{ url }}">{{ button.label }}</a>
+            {%- endfor %}
+          </div>
+          {%- endif %}
+        </div>
+        {%- if hero.logo %}
+        <img class="hero__logo" src="/assets/img/oratio_primary_light.svg" alt="" width="249" height="308">
+        {%- endif %}
+      </div>
+    </section>
+    {%- endif %}
+
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <img src="/assets/img/oratio_logo.svg" alt="" width="44" height="44">
+        <div>
+          <p class="site-footer__name">Oratio Press</p>
+          <p>{{ site.tagline }} Rooted in confessional Lutheran Christianity and the historic Daily Office.</p>
+        </div>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        {%- for item in site.nav offset: 1 %}
+        <a href="{{ item.url }}">{{ item.title }}</a>
+        {%- endfor %}
+        <a href="/privacy.html">Privacy</a>
+        <a href="{{ site.launch_list }}">Join the launch list</a>
+      </nav>
+      <p class="site-footer__legal">© {{ site.time | date: "%Y" }} Oratio Press LLC</p>
+    </div>
+  </footer>
+</body>
+</html>

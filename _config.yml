@@ -1,0 +1,31 @@
+# oratioprayer.com, built by GitHub Pages with Jekyll (no build step to run:
+# a push to main publishes it). Every page uses _layouts/default.html; see
+# README.md for how the site is put together.
+title: Oratio
+tagline: Pray Scripture daily.
+description: >-
+  Oratio is a confessional Lutheran prayer app for Christians who want a
+  deeper, more Scripture-centered life of prayer, through the historic Daily
+  Office.
+url: https://oratioprayer.com
+
+# Where "Join the launch list" and the contact links send mail, until a real
+# mailing list exists.
+email: oratiopress@gmail.com
+launch_list: "mailto:oratiopress@gmail.com?subject=Oratio%20launch%20list&body=Please%20add%20me%20to%20the%20Oratio%20launch%20list."
+
+# The header's navigation, in order. The footer adds the privacy policy.
+nav:
+  - { title: Home, url: / }
+  - { title: About, url: /about.html }
+  - { title: How It Works, url: /how-it-works.html }
+  - { title: For Churches, url: /churches.html }
+  - { title: FAQ, url: /faq.html }
+  - { title: Contact, url: /contact.html }
+
+defaults:
+  - scope: { path: "" }
+    values: { layout: default }
+
+exclude:
+  - README.md
