@@ -1,0 +1,295 @@
+/*
+ * oratioprayer.com: the Oratio app's look on the web.
+ *
+ * The colors, type, radii, and shadows are the app's own design tokens
+ * (Oratio-Prayer-App: app/lib/theme/tokens.dart), so the site and the app
+ * read as one thing: parchment pages, paper cards, the burgundy hero with its
+ * gold kicker, Crimson Pro headings over Inter text. With the device in dark
+ * mode the site takes the app's night theme (midnight blue, night gold).
+ * The fonts are the app's (SIL Open Font License, assets/fonts/OFL.txt),
+ * served from this site, so a page loads nothing from anyone else.
+ */
+
+@font-face { font-family: "Crimson Pro"; font-weight: 400; font-display: swap; src: url("../fonts/CrimsonPro-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Crimson Pro"; font-weight: 400; font-style: italic; font-display: swap; src: url("../fonts/CrimsonPro-Italic.woff2") format("woff2"); }
+@font-face { font-family: "Crimson Pro"; font-weight: 600; font-display: swap; src: url("../fonts/CrimsonPro-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "Crimson Pro"; font-weight: 700; font-display: swap; src: url("../fonts/CrimsonPro-Bold.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; font-display: swap; src: url("../fonts/Inter-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url("../fonts/Inter-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url("../fonts/Inter-SemiBold.woff2") format("woff2"); }
+
+/* -- Tokens --------------------------------------------------------------- */
+
+:root {
+  /* OratioColors (light). */
+  --page: #F5F1E4;          /* parchment */
+  --surface: #FFFCF4;       /* paper: cards */
+  --ink: #1A1A1A;           /* scripture */
+  --ink-soft: #56524B;
+  --heading: #620E1B;       /* burgundy */
+  --link: #620E1B;
+  --accent: #B1791F;        /* goldDeep: gold that reads on paper */
+  --border: #D7CDB7;
+  --chrome: #620E1B;        /* the app's header bar */
+  --chrome-ink: #FFFCF4;
+  --footer: #2C3E55;        /* midnight */
+  --gold: #E0A74C;
+  --hero-1: #761827;        /* the hero card's gradient */
+  --hero-2: #64131F;
+  --hero-3: #4D0D18;
+  --card-shadow: 0 1px 2px rgba(26, 26, 26, 0.05), 0 8px 24px rgba(26, 26, 26, 0.086);
+  --hero-shadow: 0 12px 24px rgba(77, 13, 24, 0.25);
+
+  /* Type: Crimson Pro for headings, Inter for text (FontFamilies). */
+  --serif: "Crimson Pro", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Radii and spacing (Radii, Space). */
+  --radius-control: 10px;
+  --radius-card: 12px;
+  --radius-sheet: 16px;
+  --gutter: 20px;
+  --measure: 720px;         /* readableWidth */
+  --wide: 1080px;
+
+  color-scheme: light dark;
+}
+
+/* The app's night theme. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #2C3E55;        /* midnight */
+    --surface: #33485F;     /* nightSurface */
+    --ink: #F5F1E4;
+    --ink-soft: #C9D1DB;
+    --heading: #E5B66A;     /* nightGold */
+    --link: #E5B66A;
+    --accent: #E5B66A;
+    --border: rgba(140, 156, 177, 0.45);
+    --chrome: #26374B;      /* nightChrome */
+    --footer: #1F2E40;
+    --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 10px 24px rgba(0, 0, 0, 0.25);
+    --hero-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* -- Base ----------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 400 1.0625rem/1.7 var(--sans);
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h2 { color: var(--heading); font-weight: 600; font-size: clamp(1.6rem, 3.4vw, 2.05rem); }
+h3 { color: var(--heading); font-weight: 600; font-size: 1.3rem; }
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; }
+
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+
+img { max-width: 100%; height: auto; }
+
+.skip-link {
+  position: absolute; left: 12px; top: -60px; z-index: 20;
+  padding: 10px 16px; border-radius: var(--radius-control);
+  background: var(--surface); color: var(--link); font-weight: 600;
+}
+.skip-link:focus { top: 12px; }
+
+/* -- Header: the app's burgundy bar with the gold mark -------------------- */
+
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--chrome);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.site-header__inner {
+  max-width: var(--wide); margin: 0 auto; padding: 10px var(--gutter);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; }
+.brand__mark { width: 34px; height: 32px; }
+.brand__word { width: auto; height: 26px; }
+.site-nav { display: flex; flex-wrap: wrap; gap: 2px; justify-content: flex-end; }
+.site-nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+  border-radius: var(--radius-control);
+  color: var(--chrome-ink); opacity: 0.85;
+  font-size: 0.92rem; font-weight: 500; text-decoration: none;
+}
+.site-nav a:hover { opacity: 1; background: rgba(255, 255, 255, 0.08); }
+.site-nav a[aria-current="page"] { opacity: 1; color: var(--gold); box-shadow: inset 0 -2px 0 var(--gold); border-radius: 0; }
+
+/* On a phone the links sit in one row under the brand, scrolling sideways. */
+@media (max-width: 860px) {
+  .site-header { position: static; }
+  .site-header__inner { flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 4px; }
+  .site-nav { flex-wrap: nowrap; justify-content: flex-start; width: calc(100% + 2 * var(--gutter)); margin: 0 calc(-1 * var(--gutter)); padding: 0 calc(var(--gutter) - 12px); overflow-x: auto; scrollbar-width: none; }
+  .site-nav::-webkit-scrollbar { display: none; }
+  .site-nav a { white-space: nowrap; }
+}
+
+/* -- Hero: the app's Home card -------------------------------------------- */
+
+.hero { max-width: var(--wide); margin: 0 auto; padding: 32px var(--gutter) 8px; }
+.hero__card {
+  position: relative; overflow: hidden;
+  padding: clamp(28px, 5vw, 56px);
+  border-radius: var(--radius-sheet);
+  color: #FFFCF4;
+  background:
+    radial-gradient(130% 130% at 5% -5%, rgba(255, 255, 255, 0.15), transparent 60%),
+    linear-gradient(135deg, var(--hero-1), var(--hero-2) 55%, var(--hero-3));
+  box-shadow: var(--hero-shadow);
+}
+.hero__card--logo { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.hero__logo { justify-self: center; width: min(100%, 230px); }
+@media (max-width: 760px) {
+  .hero__card--logo { grid-template-columns: 1fr; gap: 28px; }
+  .hero__logo { order: -1; width: 120px; justify-self: start; }
+}
+.kicker {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font: 600 0.8rem/1.4 var(--sans); letter-spacing: 0.12em; text-transform: uppercase;
+}
+.hero h1 { color: #FFFCF4; font-size: clamp(2.2rem, 5.5vw, 3.5rem); font-weight: 700; margin-bottom: 16px; max-width: 18ch; }
+.hero__lead { font-size: 1.12rem; line-height: 1.6; max-width: 46ch; opacity: 0.95; }
+.hero__note { font-size: 0.92rem; opacity: 0.85; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 22px;
+  border-radius: var(--radius-control); border: 1px solid transparent;
+  font: 600 1rem/1 var(--sans); text-decoration: none;
+}
+.button--primary { background: var(--gold); color: #3B0811; }
+.button--primary:hover { background: #E8B866; }
+.button--light { border-color: rgba(255, 252, 244, 0.6); color: #FFFCF4; }
+.button--light:hover { background: rgba(255, 255, 255, 0.1); }
+/* Outside the hero, the app's filled button: burgundy (gold at night). */
+.section .button--primary { background: var(--heading); color: var(--page); }
+
+/* -- Sections ------------------------------------------------------------- */
+
+.section { max-width: var(--measure); margin: 0 auto; padding: 48px var(--gutter) 0; }
+.section--wide { max-width: var(--wide); }
+.section > h2 + p, .section__intro { color: var(--ink-soft); }
+.section:last-of-type { padding-bottom: 64px; }
+
+.lede { font-family: var(--serif); font-size: 1.35rem; line-height: 1.5; color: var(--ink); }
+
+/* Cards: the app's paper cards ("soft lift"). */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+  padding: 22px 24px;
+}
+.card h3 { margin-bottom: 6px; }
+.card p { color: var(--ink-soft); }
+/* The gold rule down the left of the app's "Today's prayer" card. */
+.card--accent { border-left: 4px solid var(--gold); }
+
+.cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 24px; }
+.section--wide .cards { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+/* Five cards: three across, then two, rather than four and one alone. */
+@media (min-width: 900px) { .cards--three { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+/* A card's closing link sits at its foot, level across a row. */
+.card { display: flex; flex-direction: column; }
+.card__link { margin-top: auto; padding-top: 12px; font-weight: 500; }
+
+/* The five Prayer Forms, numbered as the app's onboarding shows them. */
+.forms { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; counter-reset: form; }
+.forms li { counter-increment: form; display: grid; grid-template-columns: 44px 1fr; gap: 0 16px; align-items: start; }
+.forms li::before {
+  content: counter(form);
+  grid-row: span 2;
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--heading); color: var(--page);
+  font: 700 1.3rem/1 var(--serif);
+}
+.forms h3 { margin: 6px 0 2px; }
+.forms p { color: var(--ink-soft); }
+.forms + p { margin-top: 20px; }
+
+/* A list with the app's gold diamonds. */
+.ticks { list-style: none; padding: 0; margin: 16px 0 20px; }
+.ticks li { position: relative; padding: 6px 0 6px 28px; border-bottom: 1px solid var(--border); }
+.ticks li:last-child { border-bottom: 0; }
+.ticks li::before { content: "✦"; position: absolute; left: 4px; top: 7px; color: var(--accent); font-size: 0.8rem; }
+.ticks--columns { columns: 2 240px; column-gap: 32px; }
+.ticks--columns li { break-inside: avoid; }
+
+blockquote {
+  margin: 24px 0; padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--gold);
+  font: italic 400 1.35rem/1.5 var(--serif); color: var(--ink);
+}
+
+/* FAQ: each question a card that opens. */
+.faq { display: grid; gap: 10px; margin-top: 16px; }
+.faq details { padding: 0; }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  min-height: 56px; padding: 14px 20px;
+  font: 600 1.15rem/1.3 var(--serif); color: var(--ink);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; flex: none; color: var(--accent); font: 400 1.6rem/1 var(--sans); }
+.faq details[open] summary::after { content: "–"; }
+.faq details > :not(summary) { margin: 0; padding: 0 20px 18px; color: var(--ink-soft); }
+.faq details ul { padding-left: 40px; }
+
+/* The closing call to join the launch list. */
+.cta { text-align: center; padding: 32px 24px; }
+.cta h2 { margin-bottom: 8px; }
+.cta .buttons { justify-content: center; }
+
+/* Long reading (the privacy policy). */
+.prose h2 { font-size: 1.5rem; margin-top: 40px; }
+.prose ul { padding-left: 22px; }
+.prose li { margin-bottom: 8px; }
+.prose li::marker { color: var(--accent); }
+
+/* -- Footer: midnight, as the app at night -------------------------------- */
+
+.site-footer { background: var(--footer); color: #E3E8EE; margin-top: 16px; }
+.site-footer__inner {
+  max-width: var(--wide); margin: 0 auto; padding: 40px var(--gutter) 28px;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px 40px;
+}
+.site-footer__brand { display: flex; gap: 16px; align-items: flex-start; }
+.site-footer__brand img { flex: none; border-radius: 10px; }
+.site-footer__brand p { margin: 0; font-size: 0.92rem; opacity: 0.85; }
+.site-footer__name { font: 600 1.3rem/1.2 var(--serif) !important; opacity: 1 !important; margin-bottom: 4px !important; color: #FFFCF4; }
+.site-footer__nav { display: flex; flex-wrap: wrap; gap: 0 4px; align-content: flex-start; justify-content: flex-end; }
+.site-footer__nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; color: #E3E8EE; font-size: 0.92rem; text-decoration: none; }
+.site-footer__nav a:hover { color: var(--gold); text-decoration: underline; }
+.site-footer__legal { grid-column: 1 / -1; margin: 0; padding-top: 16px; border-top: 1px solid rgba(227, 232, 238, 0.15); font-size: 0.85rem; opacity: 0.7; }
+@media (max-width: 760px) {
+  .site-footer__inner { grid-template-columns: 1fr; }
+  .site-footer__nav { justify-content: flex-start; margin-left: -10px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
