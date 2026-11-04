@@ -24,6 +24,6 @@ gem install jekyll -v 3.10.0 webrick   # GitHub Pages' Jekyll version
 jekyll serve                           # http://localhost:4000
 ```
 
-The launch-list and contact buttons open an email to oratiopress@gmail.com
+The launch-list and contact buttons open an email to info@oratiopress.com
 until a real mailing list exists; change `email` and `launch_list` in
 `_config.yml` to move them.
