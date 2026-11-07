@@ -33,6 +33,7 @@
   <link rel="preload" href="/assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/CrimsonPro-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/site.css">
+  <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
   <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js" 
         integrity="sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg"
         crossorigin="anonymous"></script>
@@ -73,7 +74,15 @@
           <div class="buttons">
             {%- for button in hero.buttons %}
             {%- assign url = button.url | replace: "LAUNCH_LIST", site.launch_list %}
-            <a class="button button--{{ button.style | default: 'primary' }}" href="{{ url }}">{{ button.label }}</a>
+            <a
+              class="button button--{{ button.style | default: 'primary' }}"
+              href="{{ url }}"
+              {%- if button.hx_post %}
+              hx-post="{{ button.hx_post | escape }}"
+              hx-swap="{{ button.hx_swap | default: 'outerHTML' | escape }}"
+              {%- endif %}>
+              {{ button.label }}
+            </a>
             {%- endfor %}
           </div>
           {%- endif %}

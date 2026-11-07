@@ -5,7 +5,7 @@ hero:
   title: Start where you are. Go deeper when you're ready.
   lead: Oratio is a confessional Lutheran prayer app that helps Christians build a deeper, sustainable rhythm of Scripture and prayer.
   buttons:
-    - { label: Join the launch list, url: LAUNCH_LIST }
+    - { label: Join the launch list, url: "#join", hx_post: "https://api-service.c24.airoapp.ai/api/mailing-list/form", hx_swap: "outerHTML transition:true" }
     - { label: See the Prayer Forms, url: "#prayer-forms", style: light }
 ---
 

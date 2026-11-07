@@ -7,14 +7,7 @@ hero:
   lead: Oratio is a confessional Lutheran prayer app for Christians who want a deeper, more Scripture-centered life of prayer. Start with Scripture and guided prayer, then explore the historic Daily Office through Prayer Forms that meet you where you are.
   logo: true
   buttons:
-    - html: |
-        <button
-          type="button"
-          hx-post="https://api-service.c24.airoapp.ai/api/mailing-list/form"
-          hx-swap="outerHTML transition:true"
-          class="button button--primary">
-          Join the Launch List
-        </button>
+    - { label: Join the launch list, url: "#join", hx_post: "https://api-service.c24.airoapp.ai/api/mailing-list/form", hx_swap: "outerHTML transition:true" }
     - { label: See the Prayer Forms, url: /how-it-works.html, style: light }
 ---
 
