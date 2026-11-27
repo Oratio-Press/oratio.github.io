@@ -285,6 +285,8 @@ blockquote {
 .site-footer__nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; color: #E3E8EE; font-size: 0.92rem; text-decoration: none; }
 .site-footer__nav a:hover { color: var(--gold); text-decoration: underline; }
 .site-footer__legal { grid-column: 1 / -1; margin: 0; padding-top: 16px; border-top: 1px solid rgba(227, 232, 238, 0.15); font-size: 0.85rem; opacity: 0.7; }
+.site-footer__legal a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.site-footer__legal a:hover { color: var(--gold); }
 @media (max-width: 760px) {
   .site-footer__inner { grid-template-columns: 1fr; }
   .site-footer__nav { justify-content: flex-start; margin-left: -10px; }
