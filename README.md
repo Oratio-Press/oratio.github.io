@@ -9,7 +9,7 @@ a push to `main` publishes it, with no build step to run.
 | Path | What |
 |---|---|
 | `_config.yml` | The site's name, the header's navigation, and the email address the launch-list and contact links use. |
-| `_layouts/default.html` | The one layout: header, the burgundy hero card, footer. A page's front matter sets its `title`, `description`, and `hero` (kicker, title, lead, buttons; `logo: true` adds the logo, as Home does). |
+| `_layouts/default.html` | The one layout: header, the burgundy hero card, footer (with the copyright and the developer credit, Hallowed Gains LLC). A page's front matter sets its `title`, `description`, and `hero` (kicker, title, lead, buttons; `logo: true` adds the logo, as Home does). |
 | `_includes/launch-list.html` | The closing invitation at the end of most pages. |
 | `index.html`, `about.html`, … | The pages: front matter, then their content. |
 | `privacy.html` | The privacy policy the app stores link to. Keep it in step with what the app collects. |
